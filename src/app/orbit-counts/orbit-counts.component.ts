@@ -16,16 +16,34 @@ export class OrbitCountsComponent implements OnInit {
   }
 
   countByType(type: string): number {
-	let count = 0;
-	if (this.satellites) {
-	  for (let i = 0; i < this.satellites.length; i++) {
-		 if (this.satellites[i].type === type) {
-			count++;
-		 }
-	  }
+		let count = 0;
+		if (this.satellites) {
+			for (let i = 0; i < this.satellites.length; i++) {
+			if (this.satellites[i].type === type) {
+				count++;
+			}
+			}
+		}
+		return count;
+ 	}
+
+	typeCounts() {
+		if (this.satellites) {
+			let typeCountMap = {};
+			let typeCountArr = [];
+			for (let satellite of this.satellites) {
+				if (!typeCountMap[satellite.type]) {
+					typeCountMap[satellite.type] = 0;
+				}
+				typeCountMap[satellite.type] += 1;
+			}
+			for (let type in typeCountMap) {
+				typeCountArr.push({
+					name: type,
+					count: typeCountMap[type],
+				});
+			}
+			return typeCountArr;
+		}
 	}
-	return count;
- }
-
-
 }
